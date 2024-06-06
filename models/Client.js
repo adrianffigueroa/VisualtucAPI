@@ -1,6 +1,6 @@
-﻿const moongoose = require('mongoose')
+﻿const mongoose = require('mongoose')
 
-const clientSchema = new moongoose.Schema(
+const clientSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     lastname: { type: String, required: true },
@@ -8,6 +8,8 @@ const clientSchema = new moongoose.Schema(
     companyName: { type: String, required: false },
     email: { type: String, required: true },
     phone: { type: String, required: true },
+    jobs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Jobs' }],
+    active: { type: Boolean, default: true },
   },
   {
     timestamps: true,
