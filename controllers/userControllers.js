@@ -33,8 +33,8 @@ const getUser = asyncHandler(async (req, res) => {
 // @route POST /users
 // @access Private
 const createNewUser = asyncHandler(async (req, res) => {
-  const { username, name, lastname, password } = req.body
-  if (!username || !name || !lastname || !password) {
+  const { username, name, lastname, password, email } = req.body
+  if (!username || !name || !lastname || !password || !email) {
     return res.status(400).json({ message: 'All fields are required' })
   }
   const duplicate = await User.findOne({ username }).lean().exec()
@@ -42,7 +42,13 @@ const createNewUser = asyncHandler(async (req, res) => {
     return res.status(409).json({ message: 'Duplicate username' })
   }
   const hashedPassword = await bycrypt.hash(password, 10)
-  const userObject = { username, name, lastname, password: hashedPassword }
+  const userObject = {
+    username,
+    name,
+    lastname,
+    password: hashedPassword,
+    email,
+  }
   const user = await User.create(userObject)
   if (user) {
     res.status(201).json({ message: `New user ${username} created` })
@@ -82,7 +88,7 @@ const updateUser = asyncHandler(async (req, res) => {
 // @route DELETE /users
 // @access Private
 const deleteUser = asyncHandler(async (req, res) => {
-  const { id } = req.body
+  const { id } = req.params
   if (!id) {
     return res.status(400).json({ message: 'User ID required' })
   }

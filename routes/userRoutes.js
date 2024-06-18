@@ -8,7 +8,7 @@ router
   .get('/getUser/:id', userControllers.getUser)
   .post('/createNewUser', validatonCreate, userControllers.createNewUser)
   .patch('/updateUser', userControllers.updateUser)
-  .delete('/deleteUser', userControllers.deleteUser)
+  .delete('/deleteUser/:id', userControllers.deleteUser)
   .patch('/deactivateUser', userControllers.deactivateUser)
 
 module.exports = router
