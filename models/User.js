@@ -7,7 +7,12 @@ const userSchema = new moongoose.Schema(
     lastname: { type: String, required: true },
     password: { type: String, required: true },
     email: { type: String, required: true },
-    role: { type: String, default: 'Empleado' },
+    role: {
+      type: String,
+      enum: ['Administrador', 'Manager', 'Empleado'],
+      default: 'Empleado',
+      required: true,
+    },
     active: { type: Boolean, default: true },
   },
   {
